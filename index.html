@@ -149,10 +149,11 @@
             // 5. 在新标签页中打开预填写的表单链接
             window.open(finalUrl, '_blank');
             
-            // 6. 提供用户反馈并重置表单
+            // 6. 按照您的要求，提示用户在下一个页面再次点击提交
             submitButton.disabled = true;
-            submitButton.textContent = '请在新标签页中完成提交';
+            submitButton.textContent = '请在新页面中再次点击“提交”';
             
+            // 7. 5秒后恢复按钮和表单，方便用户提交新的反馈
             setTimeout(() => {
                 submitButton.disabled = false;
                 submitButton.textContent = '提交反馈';
