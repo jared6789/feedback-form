@@ -130,38 +130,49 @@
         const form = document.getElementById('feedback-form');
         const successMessage = document.getElementById('success-message');
         const submitButton = form.querySelector('button[type="submit"]');
-        let formSubmitted = false;
+        const hiddenIframe = document.getElementById('hidden_iframe');
+        // 使用一个变量来跟踪提交状态
+        let submitted = false;
 
+        // 表单提交时触发的函数
         form.addEventListener('submit', function() {
-            // 标记表单已被提交
-            formSubmitted = true;
+            // 标记表单已提交
+            submitted = true;
             
-            // 禁用按钮并显示加载状态
+            // 禁用按钮并显示加载状态，防止重复提交
             submitButton.disabled = true;
             submitButton.textContent = '正在提交...';
+        });
 
-            // 使用一个短暂的延时来处理UI更新。
-            // 这样做的原因是，表单的实际提交是即刻发生的，我们通过延时来“假定”它已成功，并给用户反馈。
+        // iframe 加载完成后调用的函数
+        function showConfirmation() {
+            // 显示成功消息
+            successMessage.classList.remove('hidden');
+            // 滚动到页面顶部，方便用户看到提示
+            window.scrollTo(0, 0);
+
+            // 重置表单，方便下一次填写
+            form.reset();
+
+            // 5秒后自动隐藏成功消息
             setTimeout(() => {
-                // 显示成功消息
-                successMessage.classList.remove('hidden');
-                window.scrollTo(0, 0);
+                successMessage.classList.add('hidden');
+            }, 5000);
 
-                // 重置表单，方便下一次填写
-                form.reset();
+            // 恢复按钮状态
+            submitButton.disabled = false;
+            submitButton.textContent = '提交反馈';
 
-                // 恢复按钮状态
-                submitButton.disabled = false;
-                submitButton.textContent = '提交反馈';
+            // 重置提交标记
+            submitted = false;
+        }
 
-                // 5秒后自动隐藏成功消息
-                setTimeout(() => {
-                    successMessage.classList.add('hidden');
-                }, 5000);
-
-                // 重置提交标记
-                formSubmitted = false;
-            }, 1000); // 1秒后显示成功信息
+        // 使用 addEventListener 监听 iframe 的加载事件
+        hiddenIframe.addEventListener('load', function () {
+            // 只有在我们的表单确实被提交后才执行后续操作
+            if (submitted) {
+                showConfirmation();
+            }
         });
     </script>
 </body>
