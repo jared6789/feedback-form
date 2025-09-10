@@ -42,31 +42,42 @@
                 <p class="text-gray-500 mt-2">请填写您遇到的问题，我们会尽快处理。</p>
             </div>
             
-            <form id="feedback-form" class="space-y-6">
+            <div id="success-message" class="hidden bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md mb-6" role="alert">
+                <p class="font-bold">提交成功！</p>
+                <p>感谢您的反馈，我们会尽快处理您的问题。</p>
+            </div>
+
+            <form 
+              id="feedback-form" 
+              class="space-y-6"
+              action="https://wj.qq.com/s2/23824446/7883/"
+              method="POST"
+              target="hidden_iframe"
+            >
                 <!-- 房间号 -->
                 <div>
                     <label for="room-number" class="block text-sm font-semibold text-gray-700 mb-1">房间号 <span class="text-red-500">*</span></label>
-                    <input type="text" id="room-number" name="entry.520383063" placeholder="房间门口数字或文字编号" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow">
+                    <input type="text" id="room-number" name="1" placeholder="房间门口数字或文字编号" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow">
                 </div>
 
                 <!-- 问题类型 -->
                 <div>
                     <label for="issue-type" class="block text-sm font-semibold text-gray-700 mb-1">问题类型 <span class="text-red-500">*</span></label>
-                    <select id="issue-type" name="entry.443378605" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow bg-white">
+                    <select id="issue-type" name="2" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow bg-white">
                         <option value="" disabled selected>请选择问题类型</option>
-                        <option value="水管/卫浴">水管/卫浴</option>
-                        <option value="电路/电器">电路/电器</option>
-                        <option value="家具损坏">家具损坏</option>
-                        <option value="网络问题">网络问题</option>
-                        <option value="卫生问题">卫生问题</option>
-                        <option value="其他问题">其他问题</option>
+                        <option value="1">水管/卫浴</option>
+                        <option value="2">电路/电器</option>
+                        <option value="3">家具损坏</option>
+                        <option value="4">网络问题</option>
+                        <option value="5">卫生问题</option>
+                        <option value="6">其他问题</option>
                     </select>
                 </div>
 
                 <!-- 详细问题描述 -->
                 <div>
                     <label for="issue-description" class="block text-sm font-semibold text-gray-700 mb-1">详细问题描述 <span class="text-red-500">*</span></label>
-                    <textarea id="issue-description" name="entry.874869025" rows="4" placeholder="请详细描述您遇到的问题，例如具体位置、损坏情况等。" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"></textarea>
+                    <textarea id="issue-description" name="3" rows="4" placeholder="请详细描述您遇到的问题，例如具体位置、损坏情况等。" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"></textarea>
                 </div>
 
                 <!-- 紧急程度 -->
@@ -74,15 +85,15 @@
                     <label class="block text-sm font-semibold text-gray-700 mb-2">紧急程度 <span class="text-red-500">*</span></label>
                     <div class="flex items-center space-x-6">
                         <label class="flex items-center">
-                            <input type="radio" name="entry.1999358171" value="低" required class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                            <input type="radio" name="4" value="1" required class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                             <span class="ml-2 text-gray-700">低</span>
                         </label>
                         <label class="flex items-center">
-                            <input type="radio" name="entry.1999358171" value="中" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                            <input type="radio" name="4" value="2" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                             <span class="ml-2 text-gray-700">中</span>
                         </label>
                         <label class="flex items-center">
-                            <input type="radio" name="entry.1999358171" value="高" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                            <input type="radio" name="4" value="3" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                             <span class="ml-2 text-gray-700">高</span>
                         </label>
                     </div>
@@ -95,13 +106,13 @@
                 <!-- 姓名 -->
                 <div>
                     <label for="user-name" class="block text-sm font-semibold text-gray-700 mb-1">您的姓名</label>
-                    <input type="text" id="user-name" name="entry.1342483043" placeholder="方便我们与您联系" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow">
+                    <input type="text" id="user-name" name="5" placeholder="方便我们与您联系" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow">
                 </div>
 
                 <!-- 联系方式 -->
                 <div>
                     <label for="contact-info" class="block text-sm font-semibold text-gray-700 mb-1">联系电话/邮箱</label>
-                    <input type="text" id="contact-info" name="entry.396929221" placeholder="方便我们与您联系" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow">
+                    <input type="text" id="contact-info" name="6" placeholder="方便我们与您联系" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow">
                 </div>
 
                 <div class="pt-4">
@@ -113,52 +124,47 @@
         </div>
     </main>
 
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
     <script>
         const form = document.getElementById('feedback-form');
         const submitButton = form.querySelector('button[type="submit"]');
+        const successMessage = document.getElementById('success-message');
+        const hiddenIframe = document.getElementById('hidden_iframe');
+        let formSubmitted = false;
 
-        form.addEventListener('submit', function(event) {
-            // 1. 阻止表单的默认提交行为
-            event.preventDefault();
-
-            // 2. 构建预填写链接的基础部分
-            const baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSefnqH4lPHcVqQzpbr8QNeH0_s_UadtcE0uyCH2n2ZRNFFn9A/viewform?usp=pp_url";
-
-            // 3. 获取所有表单元素的值
-            const roomNumber = document.getElementById('room-number').value;
-            const issueType = document.getElementById('issue-type').value;
-            const issueDescription = document.getElementById('issue-description').value;
-            
-            const emergencyLevelInput = document.querySelector('input[name="entry.1999358171"]:checked');
-            const emergencyLevel = emergencyLevelInput ? emergencyLevelInput.value : '';
-
-            const userName = document.getElementById('user-name').value;
-            const contactInfo = document.getElementById('contact-info').value;
-
-            // 4. 使用 URLSearchParams 来安全地构建查询字符串
-            const params = new URLSearchParams();
-            if (roomNumber) params.append('entry.520383063', roomNumber);
-            if (issueType) params.append('entry.443378605', issueType);
-            if (issueDescription) params.append('entry.874869025', issueDescription);
-            if (emergencyLevel) params.append('entry.1999358171', emergencyLevel);
-            if (userName) params.append('entry.1342483043', userName);
-            if (contactInfo) params.append('entry.396929221', contactInfo);
-
-            const finalUrl = `${baseUrl}&${params.toString()}`;
-
-            // 5. 在新标签页中打开预填写的表单链接
-            window.open(finalUrl, '_blank');
-            
-            // 6. 按照您的要求，提示用户在下一个页面再次点击提交
+        form.addEventListener('submit', function() {
+            // 检查表单有效性
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            formSubmitted = true;
             submitButton.disabled = true;
-            submitButton.textContent = '请在新页面中再次点击“提交”';
-            
-            // 7. 5秒后恢复按钮和表单，方便用户提交新的反馈
-            setTimeout(() => {
+            submitButton.textContent = '正在提交...';
+        });
+
+        hiddenIframe.addEventListener('load', function () {
+            if (formSubmitted) {
+                // 显示成功消息
+                successMessage.classList.remove('hidden');
+                // 滚动到顶部以查看消息
+                document.body.scrollTop = 0; // For Safari
+                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+
+                // 重置表单和按钮
+                form.reset();
                 submitButton.disabled = false;
                 submitButton.textContent = '提交反馈';
-                form.reset();
-            }, 5000);
+
+                // 5秒后隐藏成功消息
+                setTimeout(() => {
+                    successMessage.classList.add('hidden');
+                }, 5000);
+
+                // 重置提交标志
+                formSubmitted = false;
+            }
         });
     </script>
 </body>
