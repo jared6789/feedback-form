@@ -47,13 +47,7 @@
                 <p>感谢您的反馈，我们会尽快处理您的问题。</p>
             </div>
             
-            <form 
-              id="feedback-form" 
-              class="space-y-6"
-              action="https://docs.google.com/forms/d/e/1FAIpQLSefnqH4lPHcVqQzpbr8QNeH0_s_UadtcE0uyCH2n2ZRNFFn9A/formResponse" 
-              method="POST"
-              target="hidden_iframe"
-            >
+            <form id="feedback-form" class="space-y-6">
                 <!-- 房间号 -->
                 <div>
                     <label for="room-number" class="block text-sm font-semibold text-gray-700 mb-1">房间号 <span class="text-red-500">*</span></label>
@@ -124,29 +118,36 @@
         </div>
     </main>
 
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-
     <script>
         const form = document.getElementById('feedback-form');
         const successMessage = document.getElementById('success-message');
-        const hiddenIframe = document.getElementById('hidden_iframe');
-        let formSubmitted = false;
 
-        // 监听表单提交事件
-        form.addEventListener('submit', function() {
-            formSubmitted = true;
-        });
-        
-        // 使用 addEventListener 监听 iframe 的加载事件
-        hiddenIframe.addEventListener('load', function () {
-            // 只有在我们的表单确实被提交后才执行后续操作
-            if (formSubmitted) {
+        form.addEventListener('submit', function(event) {
+            // 阻止表单的默认提交行为，这样页面就不会刷新或跳转
+            event.preventDefault();
+
+            // 显示一个加载指示（可选，但建议）
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = '正在提交...';
+
+            const formData = new FormData(form);
+            const url = 'https://docs.google.com/forms/d/e/1FAIpQLSefnqH4lPHcVqQzpbr8QNeH0_s_UadtcE0uyCH2n2ZRNFFn9A/formResponse';
+
+            // 使用 fetch API 在后台发送数据
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // 这个模式很重要，它允许我们发送数据而不会因CORS策略而被浏览器阻止
+            }).then(response => {
+                // 因为是 'no-cors' 模式, 我们无法读取服务器的真实响应
+                // 但只要请求成功发送，我们就假定提交成功了
+                
                 // 显示成功消息
                 successMessage.classList.remove('hidden');
                 
                 // 将页面滚动到顶部，确保用户能看到提示
-                document.body.scrollTop = 0; // For Safari
-                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+                window.scrollTo(0, 0);
 
                 // 重置表单内容
                 form.reset();
@@ -155,12 +156,17 @@
                 setTimeout(() => {
                     successMessage.classList.add('hidden');
                 }, 5000);
-                
-                // 重置提交状态，防止刷新页面时意外触发
-                formSubmitted = false;
-            }
+
+            }).catch(error => {
+                // 这个只会捕获网络级别的错误
+                console.error('表单提交时发生网络错误:', error);
+                alert('提交失败，请检查您的网络连接后重试。');
+            }).finally(() => {
+                // 无论成功或失败，都恢复提交按钮的状态
+                submitButton.disabled = false;
+                submitButton.textContent = '提交反馈';
+            });
         });
     </script>
 </body>
 </html>
-
