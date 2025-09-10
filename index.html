@@ -41,19 +41,8 @@
                 <h1 class="text-3xl font-bold text-gray-800">问题与维修反馈</h1>
                 <p class="text-gray-500 mt-2">请填写您遇到的问题，我们会尽快处理。</p>
             </div>
-
-            <div id="success-message" class="hidden bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md mb-6" role="alert">
-                <p class="font-bold">提交成功！</p>
-                <p>感谢您的反馈，我们会尽快处理您的问题。</p>
-            </div>
             
-            <form 
-              id="feedback-form" 
-              class="space-y-6"
-              action="https://docs.google.com/forms/d/e/1FAIpQLSefnqH4lPHcVqQzpbr8QNeH0_s_UadtcE0uyCH2n2ZRNFFn9A/formResponse"
-              method="POST"
-              target="hidden_iframe"
-            >
+            <form id="feedback-form" class="space-y-6">
                 <!-- 房间号 -->
                 <div>
                     <label for="room-number" class="block text-sm font-semibold text-gray-700 mb-1">房间号 <span class="text-red-500">*</span></label>
@@ -124,55 +113,51 @@
         </div>
     </main>
 
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-
     <script>
         const form = document.getElementById('feedback-form');
-        const successMessage = document.getElementById('success-message');
         const submitButton = form.querySelector('button[type="submit"]');
-        const hiddenIframe = document.getElementById('hidden_iframe');
-        // 使用一个变量来跟踪提交状态
-        let submitted = false;
 
-        // 表单提交时触发的函数
-        form.addEventListener('submit', function() {
-            // 标记表单已提交
-            submitted = true;
+        form.addEventListener('submit', function(event) {
+            // 1. 阻止表单的默认提交行为
+            event.preventDefault();
+
+            // 2. 构建预填写链接的基础部分
+            const baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSefnqH4lPHcVqQzpbr8QNeH0_s_UadtcE0uyCH2n2ZRNFFn9A/viewform?usp=pp_url";
+
+            // 3. 获取所有表单元素的值
+            const roomNumber = document.getElementById('room-number').value;
+            const issueType = document.getElementById('issue-type').value;
+            const issueDescription = document.getElementById('issue-description').value;
             
-            // 禁用按钮并显示加载状态，防止重复提交
+            const emergencyLevelInput = document.querySelector('input[name="entry.1999358171"]:checked');
+            const emergencyLevel = emergencyLevelInput ? emergencyLevelInput.value : '';
+
+            const userName = document.getElementById('user-name').value;
+            const contactInfo = document.getElementById('contact-info').value;
+
+            // 4. 使用 URLSearchParams 来安全地构建查询字符串
+            const params = new URLSearchParams();
+            if (roomNumber) params.append('entry.520383063', roomNumber);
+            if (issueType) params.append('entry.443378605', issueType);
+            if (issueDescription) params.append('entry.874869025', issueDescription);
+            if (emergencyLevel) params.append('entry.1999358171', emergencyLevel);
+            if (userName) params.append('entry.1342483043', userName);
+            if (contactInfo) params.append('entry.396929221', contactInfo);
+
+            const finalUrl = `${baseUrl}&${params.toString()}`;
+
+            // 5. 在新标签页中打开预填写的表单链接
+            window.open(finalUrl, '_blank');
+            
+            // 6. 提供用户反馈并重置表单
             submitButton.disabled = true;
-            submitButton.textContent = '正在提交...';
-        });
-
-        // iframe 加载完成后调用的函数
-        function showConfirmation() {
-            // 显示成功消息
-            successMessage.classList.remove('hidden');
-            // 滚动到页面顶部，方便用户看到提示
-            window.scrollTo(0, 0);
-
-            // 重置表单，方便下一次填写
-            form.reset();
-
-            // 5秒后自动隐藏成功消息
+            submitButton.textContent = '请在新标签页中完成提交';
+            
             setTimeout(() => {
-                successMessage.classList.add('hidden');
+                submitButton.disabled = false;
+                submitButton.textContent = '提交反馈';
+                form.reset();
             }, 5000);
-
-            // 恢复按钮状态
-            submitButton.disabled = false;
-            submitButton.textContent = '提交反馈';
-
-            // 重置提交标记
-            submitted = false;
-        }
-
-        // 使用 addEventListener 监听 iframe 的加载事件
-        hiddenIframe.addEventListener('load', function () {
-            // 只有在我们的表单确实被提交后才执行后续操作
-            if (submitted) {
-                showConfirmation();
-            }
         });
     </script>
 </body>
