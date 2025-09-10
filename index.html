@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale-1.0">
     <title>公寓入住须知与问题反馈</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -50,7 +50,7 @@
             <form 
               id="feedback-form" 
               class="space-y-6"
-              action="https://wj.qq.com/s2/23824446/7883/"
+              action="https://wj.qq.com/s2/23824446/7883/submit"
               method="POST"
               target="hidden_iframe"
             >
@@ -133,15 +133,22 @@
         const hiddenIframe = document.getElementById('hidden_iframe');
         let formSubmitted = false;
 
-        form.addEventListener('submit', function() {
+        form.addEventListener('submit', function(event) {
+            // 阻止默认的提交事件，以便我们可以先进行验证
+            event.preventDefault();
+            
             // 检查表单有效性
             if (!form.checkValidity()) {
                 form.reportValidity();
                 return;
             }
+            
             formSubmitted = true;
             submitButton.disabled = true;
             submitButton.textContent = '正在提交...';
+            
+            // 手动触发表单提交
+            form.submit();
         });
 
         hiddenIframe.addEventListener('load', function () {
